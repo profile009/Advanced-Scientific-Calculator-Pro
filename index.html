@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Scientific Calculator Pro</title>
+      <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <button class="toggle-history">HISTORY</button>
+            <div class="memory-indicator"></div>
+            <div class="previous-operand"></div>
+            <div class="current-operand">0</div>
+        </div>
+        <div class="buttons-container">
+            <div class="standard-buttons">
+                <!-- First row -->
+                <button class="function" onclick="calculateFunction('Math.pow(', ')')">x<sup>y</sup></button>
+                <button class="function" onclick="calculateFunction('Math.sqrt(', ')')">√</button>
+                <button class="function" onclick="calculateFunction('Math.log10(', ')')">log</button>
+                <button class="function" onclick="calculateFunction('Math.log(', ')')">ln</button>
+                <button class="function" onclick="clearAll()">AC</button>
+                
+                <!-- Second row -->
+                <button class="function" onclick="calculateFunction('Math.sin(', ')')">sin</button>
+                <button class="function" onclick="calculateFunction('Math.cos(', ')')">cos</button>
+                <button class="function" onclick="calculateFunction('Math.tan(', ')')">tan</button>
+                <button class="function" onclick="appendOperator('(')">(</button>
+                <button class="function" onclick="appendOperator(')')">)</button>
+                
+                <!-- Third row -->
+                <button class="memory-btn" onclick="memoryRecall()">MR</button>
+                <button class="memory-btn" onclick="memoryClear()">MC</button>
+                <button class="memory-btn" onclick="memoryAdd()">M+</button>
+                <button class="memory-btn" onclick="memorySubtract()">M-</button>
+                <button class="function" onclick="deleteLastChar()">DEL</button>
+                
+                <!-- Fourth row -->
+                <button class="number" onclick="appendNumber('7')">7</button>
+                <button class="number" onclick="appendNumber('8')">8</button>
+                <button class="number" onclick="appendNumber('9')">9</button>
+                <button class="operator" onclick="appendOperator('/')">/</button>
+                <button class="function" onclick="appendNumber('Math.PI')">π</button>
+                
+                <!-- Fifth row -->
+                <button class="number" onclick="appendNumber('4')">4</button>
+                <button class="number" onclick="appendNumber('5')">5</button>
+                <button class="number" onclick="appendNumber('6')">6</button>
+                <button class="operator" onclick="appendOperator('*')">×</button>
+                <button class="function" onclick="appendNumber('Math.E')">e</button>
+                
+                <!-- Sixth row -->
+                <button class="number" onclick="appendNumber('1')">1</button>
+                <button class="number" onclick="appendNumber('2')">2</button>
+                <button class="number" onclick="appendNumber('3')">3</button>
+                <button class="operator" onclick="appendOperator('-')">-</button>
+                <button class="function" onclick="calculateFactorial()">x!</button>
+                
+                <!-- Seventh row -->
+                <button class="number" onclick="appendNumber('0')">0</button>
+                <button class="number" onclick="appendNumber('.')">.</button>
+                <button class="function" onclick="toggleSign()">+/-</button>
+                <button class="operator" onclick="appendOperator('+')">+</button>
+                <button class="equals" onclick="calculate()">=</button>
+            </div>
+            
+            <div class="scientific-buttons">
+                <!-- Scientific functions row 1 -->
+                <button class="scientific-btn small" onclick="calculateFunction('Math.asin(', ')')">sin<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.acos(', ')')">cos<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.atan(', ')')">tan<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.pow(10,', ')')">10<sup>x</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.exp(', ')')">e<sup>x</sup></button>
+                
+                <!-- Scientific functions row 2 -->
+                <button class="scientific-btn small" onclick="calculateFunction('Math.sinh(', ')')">sinh</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.cosh(', ')')">cosh</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.tanh(', ')')">tanh</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.pow(2,', ')')">2<sup>x</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.cbrt(', ')')">∛</button>
+                
+                <!-- Scientific functions row 3 -->
+                <button class="scientific-btn small" onclick="calculateFunction('Math.asinh(', ')')">sinh<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.acosh(', ')')">cosh<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.atanh(', ')')">tanh<sup>-1</sup></button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.log2(', ')')">log<sub>2</sub></button>
+                <button class="scientific-btn small" onclick="calculateReciprocal()">1/x</button>
+                
+                <!-- Scientific functions row 4 -->
+                <button class="scientific-btn small" onclick="appendNumber('Math.PI/2')">π/2</button>
+                <button class="scientific-btn small" onclick="appendNumber('Math.PI/4')">π/4</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.abs(', ')')">|x|</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.floor(', ')')">floor</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.ceil(', ')')">ceil</button>
+                
+                <!-- Scientific functions row 5 -->
+                <button class="scientific-btn small" onclick="appendNumber('Math.PI*2')">2π</button>
+                <button class="scientific-btn small" onclick="calculateFunction('Math.round(', ')')">round</button>
+                <button class="scientific-btn small" onclick="appendRandomNumber()">Rand</button>
+                <button class="scientific-btn small" onclick="degToRad()">deg→rad</button>
+                <button class="scientific-btn small" onclick="radToDeg()">rad→deg</button>
+            </div>
+        </div>
+
+        <!-- History Panel -->
+        <div class="history-panel">
+            <div class="history-header">
+                <div class="history-title">Calculation History</div>
+                <button class="close-history" onclick="closeHistory()">Close</button>
+            </div>
+            <div id="history-list"></div>
+            <button class="clear-history" onclick="clearHistory()">Clear History</button>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
